@@ -3,682 +3,774 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Syltic</title>
+    <title>Tom.m7 - Developer Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --primary: #6e45e2;
-            --secondary: #88d3ce;
-            --dark: #1a1a2e;
-            --darker: #16213e;
-            --light: #f8f9fa;
-            --accent: #ff7e5f;
-            --glow: 0 0 15px rgba(110, 69, 226, 0.7);
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-            transition: all 0.3s ease;
         }
 
-        @font-face {
-            font-family: 'Poppins';
-            src: url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: var(--dark);
-            color: var(--light);
+            font-family: 'Poppins', sans-serif;
+            background: #000000;
+            color: #ffffff;
+            min-height: 100vh;
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(110, 69, 226, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(136, 211, 206, 0.1) 0%, transparent 20%);
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header Styles */
-        header {
-            padding: 20px 0;
-            position: fixed;
+        /* Welcome Screen Styles */
+        .welcome-screen {
             width: 100%;
-            top: 0;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-            background-color: rgba(26, 26, 46, 0.8);
-            border-bottom: 1px solid rgba(110, 69, 226, 0.3);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo img {
-            height: 40px;
-            filter: drop-shadow(0 0 5px rgba(110, 69, 226, 0.5));
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .logo h1 {
-            font-size: 24px;
-            font-weight: 700;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 30px;
-        }
-
-        nav a {
-            color: var(--light);
-            text-decoration: none;
-            font-weight: 500;
-            position: relative;
-            padding: 5px 0;
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            transition: width 0.3s ease;
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
             height: 100vh;
+            background: linear-gradient(135deg, #000000 0%, #2d1b69 100%);
             display: flex;
-            align-items: center;
-            padding-top: 80px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            max-width: 600px;
-            z-index: 2;
-        }
-
-        .hero h2 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            line-height: 1.2;
-        }
-
-        .hero p {
-            font-size: 18px;
-            margin-bottom: 30px;
-            line-height: 1.6;
-            opacity: 0.9;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 12px 30px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            color: white;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            box-shadow: var(--glow);
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, var(--secondary), var(--primary));
-            transition: left 0.5s ease;
-            z-index: -1;
-        }
-
-        .cta-button:hover::before {
-            left: 0;
-        }
-
-        .hero-decoration {
-            position: absolute;
-            right: -100px;
-            top: 50%;
-            transform: translateY(-50%);
-            opacity: 0.2;
-            z-index: 1;
-            animation: rotate 20s linear infinite;
-        }
-
-        /* Pricing Section */
-        .pricing {
-            padding: 100px 0;
-            position: relative;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-            font-size: 36px;
-            position: relative;
-            display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(to right, transparent, var(--primary), transparent);
-        }
-
-        .pricing-pops {
-            display: flex;
+            flex-direction: column;
             justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-
-        .pop {
-            background: linear-gradient(135deg, rgba(26, 26, 46, 0.8), rgba(22, 33, 62, 0.8));
-            border-radius: 20px;
-            padding: 30px;
-            width: 300px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(110, 69, 226, 0.3);
+            align-items: center;
             position: relative;
-            overflow: hidden;
-            z-index: 1;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .pop::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
-            z-index: -2;
-            border-radius: 22px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .pop:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), var(--glow);
-        }
-
-        .pop:hover::before {
-            opacity: 0.5;
-        }
-
-        .pop-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .pop-name {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--secondary);
-        }
-
-        .pop-specs {
-            list-style: none;
-            margin-bottom: 30px;
-        }
-
-        .pop-specs li {
-            padding: 8px 0;
-            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .pop-specs li:last-child {
-            border-bottom: none;
-        }
-
-        .pop-price {
-            text-align: center;
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--accent);
-        }
-
-        .pop-button {
-            display: block;
-            text-align: center;
-            padding: 12px 0;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
+        .enter-text {
             color: white;
-            border-radius: 30px;
-            text-decoration: none;
+            font-size: 2.5rem;
             font-weight: 600;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease-out;
+            text-align: center;
+            letter-spacing: -0.02em;
+        }
+
+        .scroll-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: bounce 2s infinite;
+            cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        .pop-button:hover {
-            transform: scale(1.05);
-            box-shadow: var(--glow);
+        .scroll-indicator:hover {
+            transform: scale(1.1);
         }
 
-        /* Contact Section */
-        .contact {
-            padding: 100px 0;
-            text-align: center;
-            background-color: var(--darker);
+        .scroll-text {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            font-weight: 400;
         }
 
-        .contact-email {
-            font-size: 24px;
-            margin-top: 30px;
-        }
-
-        .contact-email a {
-            color: var(--secondary);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .contact-email a:hover {
-            color: var(--accent);
-            text-decoration: underline;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--darker);
-            padding: 40px 0;
-            text-align: center;
-            border-top: 1px solid rgba(110, 69, 226, 0.3);
-        }
-
-        .footer-logo {
+        .scroll-arrow {
+            width: 35px;
+            height: 35px;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
+            position: relative;
+            transition: all 0.3s ease;
         }
 
-        .footer-logo img {
-            height: 30px;
+        .scroll-indicator:hover .scroll-arrow {
+            border-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
 
-        .footer-logo span {
-            font-size: 20px;
-            font-weight: 700;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+        .scroll-arrow::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-right: 2px solid rgba(255, 255, 255, 0.8);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.8);
+            transform: rotate(45deg);
+            margin-top: -2px;
         }
 
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 20px;
-        }
-
-        .footer-links a {
-            color: var(--light);
-            text-decoration: none;
-            opacity: 0.7;
-            transition: opacity 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            opacity: 1;
-        }
-
-        .copyright {
-            opacity: 0.6;
-            font-size: 14px;
-        }
-
-        /* Animations */
-        @keyframes float {
-            0%, 100% {
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
                 transform: translateY(0);
             }
-            50% {
+            40% {
                 transform: translateY(-10px);
             }
-        }
-
-        @keyframes rotate {
-            0% {
-                transform: translateY(-50%) rotate(0deg);
-            }
-            100% {
-                transform: translateY(-50%) rotate(360deg);
+            60% {
+                transform: translateY(-5px);
             }
         }
 
-        /* Particles */
-        .particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: hidden;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .particle {
-            position: absolute;
-            background: rgba(110, 69, 226, 0.5);
+        /* Main Profile Styles */
+        .main-content {
+            background: #000000;
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 50px 60px 50px;
+            min-height: 100vh;
+        }
+
+        .profile-content {
+            animation: slideUp 1s ease-out;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 35px;
+            margin-bottom: 50px;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .info-section {
+            background: rgba(20, 20, 35, 0.8);
+            padding: 35px;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInSection 0.8s ease-out forwards;
+            backdrop-filter: blur(10px);
+        }
+
+        .info-section:nth-child(1) { animation-delay: 0.1s; }
+        .info-section:nth-child(2) { animation-delay: 0.2s; }
+        .info-section:nth-child(3) { animation-delay: 0.3s; }
+        .info-section:nth-child(4) { animation-delay: 0.4s; }
+        .info-section:nth-child(5) { animation-delay: 0.5s; }
+        .info-section:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes fadeInSection {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .info-section:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(107, 70, 193, 0.25);
+            border-color: rgba(107, 70, 193, 0.4);
+            background: rgba(25, 25, 40, 0.9);
+        }
+
+        .info-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #6b46c1;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.01em;
+        }
+
+        .info-text {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #e0e0e0;
+        }
+
+        .experience-item {
+            margin-bottom: 18px;
+            padding: 20px;
+            background: rgba(25, 25, 40, 0.6);
+            border-radius: 15px;
+            border-left: 4px solid #6b46c1;
+            transition: all 0.3s ease;
+        }
+
+        .experience-item:hover {
+            background: rgba(30, 30, 45, 0.8);
+            transform: translateX(5px);
+        }
+
+        .project-highlight {
+            background: linear-gradient(45deg, rgba(255, 107, 107, 0.2), rgba(255, 217, 61, 0.2));
+            border-left-color: #ff6b6b;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.8s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 25px;
+            background: rgba(107, 70, 193, 0.1);
+            border: 2px solid rgba(107, 70, 193, 0.3);
+            border-radius: 30px;
+            color: #ffffff;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 500;
+            font-size: 1.05rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .social-link:hover {
+            background: rgba(107, 70, 193, 0.3);
+            border-color: #6b46c1;
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(107, 70, 193, 0.4);
+        }
+
+        .social-link i {
+            font-size: 1.3rem;
+            transition: transform 0.3s ease;
+        }
+
+        .social-link:hover i {
+            transform: scale(1.2);
+        }
+
+        .github:hover { border-color: #333; background: rgba(51, 51, 51, 0.3); box-shadow: 0 15px 35px rgba(51, 51, 51, 0.4); }
+        .discord:hover { border-color: #5865f2; background: rgba(88, 101, 242, 0.3); box-shadow: 0 15px 35px rgba(88, 101, 242, 0.4); }
+        .instagram:hover { border-color: #e4405f; background: rgba(228, 64, 95, 0.3); box-shadow: 0 15px 35px rgba(228, 64, 95, 0.4); }
+        .whatsapp:hover { border-color: #25d366; background: rgba(37, 211, 102, 0.3); box-shadow: 0 15px 35px rgba(37, 211, 102, 0.4); }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .skill-tag {
+            background: linear-gradient(45deg, #2d1b69, #4c1d95);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 25px;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .skill-tag:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(45, 27, 105, 0.5);
+            background: linear-gradient(45deg, #4c1d95, #6b46c1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .profile-icon {
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
-            filter: blur(1px);
-            animation: float-particle linear infinite;
+            margin-right: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
         }
 
-        @keyframes float-particle {
-            0% {
-                transform: translateY(0) translateX(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) translateX(100px);
-                opacity: 0;
-            }
+        .status-inline {
+            display: inline-block;
+            background: linear-gradient(45deg, #a855f7, #c084fc);
+            color: #ffffff;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 0.8rem;
+            margin-top: 8px;
+            animation: pulse 2s infinite;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
         }
 
-        /* Responsive */
-        @media (max-width: 992px) {
-            .hero-content {
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Desktop specific enhancements */
+        @media (min-width: 1024px) {
+            .enter-text {
+                font-size: 3rem;
+                margin-bottom: 40px;
+            }
+            
+            .scroll-text {
+                font-size: 1.2rem;
+                margin-bottom: 25px;
+            }
+            
+            .scroll-arrow {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .container {
+                padding: 0 60px 80px 60px;
+            }
+            
+            .profile-content {
+                gap: 40px;
+                grid-template-columns: 1fr;
                 max-width: 100%;
-                text-align: center;
             }
-
-            .hero-decoration {
-                display: none;
+            
+            .info-section {
+                padding: 40px;
+                width: 100%;
+                max-width: 100%;
             }
-
-            .pricing-pops {
-                flex-direction: column;
-                align-items: center;
+            
+            .info-title {
+                font-size: 1.5rem;
+                margin-bottom: 25px;
+            }
+            
+            .info-text {
+                font-size: 1.1rem;
+            }
+            
+            .social-links {
+                gap: 30px;
+            }
+            
+            .social-link {
+                padding: 18px 30px;
+                font-size: 1.1rem;
             }
         }
 
-        @media (max-width: 768px) {
-            nav ul {
+        /* Ultra-wide desktop support */
+        @media (min-width: 1600px) {
+            .container {
+                max-width: 1600px;
+                padding: 0 80px 100px 80px;
+            }
+            
+            .profile-content {
+                grid-template-columns: 1fr;
+                gap: 45px;
+            }
+            
+            .enter-text {
+                font-size: 3.5rem;
+            }
+        }
+
+        /* Large desktop optimizations */
+        @media (min-width: 1200px) {
+            .skills-grid {
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
                 gap: 15px;
             }
-
-            .hero h2 {
-                font-size: 36px;
-            }
-
-            .hero p {
-                font-size: 16px;
+            
+            .skill-tag {
+                padding: 14px 20px;
+                font-size: 0.95rem;
             }
         }
 
-        @media (max-width: 576px) {
-            .header-container {
-                flex-direction: column;
+        /* Tablet adjustments */
+        @media (max-width: 1023px) and (min-width: 769px) {
+            .container {
+                padding: 0 40px 50px 40px;
+            }
+            
+            .profile-content {
+                grid-template-columns: 1fr 1fr;
+                gap: 30px;
+            }
+            
+            .enter-text {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .profile-content {
+                grid-template-columns: 1fr;
                 gap: 20px;
             }
-
-            nav ul {
-                flex-wrap: wrap;
-                justify-content: center;
+            
+            .enter-text {
+                font-size: 1.6rem;
+                text-align: center;
+                padding: 0 20px;
+                margin-bottom: 25px;
             }
-
-            .hero h2 {
-                font-size: 28px;
+            
+            .scroll-text {
+                font-size: 0.95rem;
+                margin-bottom: 15px;
             }
-
-            .section-title {
-                font-size: 28px;
+            
+            .scroll-arrow {
+                width: 30px;
+                height: 30px;
             }
-
-            .footer-links {
-                flex-direction: column;
+            
+            .container {
+                padding: 0 20px 40px 20px;
+            }
+            
+            .main-content {
+                padding-top: 60px;
+            }
+            
+            .social-links {
                 gap: 15px;
+            }
+            
+            .social-link {
+                padding: 12px 18px;
+                font-size: 0.95rem;
+            }
+            
+            .info-section {
+                padding: 25px;
+            }
+            
+            .info-title {
+                font-size: 1.2rem;
+                margin-bottom: 15px;
+            }
+            
+            .info-text {
+                font-size: 1rem;
+            }
+            
+            .skills-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 10px;
+            }
+            
+            .skill-tag {
+                padding: 10px 12px;
+                font-size: 0.85rem;
+            }
+            
+            .experience-item {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+        }
+
+        /* Smooth scroll for all browsers */
+        @media (prefers-reduced-motion: no-preference) {
+            html {
+                scroll-behavior: smooth;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .info-section {
+                border: 2px solid rgba(255, 255, 255, 0.3);
+            }
+            
+            .skill-tag {
+                border: 1px solid rgba(255, 255, 255, 0.5);
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .scroll-indicator {
+                animation: none;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container header-container">
-            <div class="logo">
-                <img src="syltic.png" alt="Syltic Logo">
-                <h1>Syltic, Inc.</h1>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="particles" id="particles"></div>
-        <div class="container">
-            <div class="hero-content">
-                <h2>Premium VPS Hosting with Unmatched Performan & Prices</h2>
-                <p>Experience lightning-fast servers with our cutting-edge infrastructure. Perfect for businesses, developers, and gamers who demand the best.</p>
-                <a href="#pricing" class="cta-button">View Plans</a>
-            </div>
-        </div>
-        <div class="hero-decoration">
-            <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M200 0C200 0 326.5 50 400 200C400 200 326.5 350 200 400C200 400 73.5 350 0 200C0 200 73.5 50 200 0Z" fill="url(#paint0_linear_1_2)"/>
-                <defs>
-                    <linearGradient id="paint0_linear_1_2" x1="200" y1="0" x2="200" y2="400" gradientUnits="userSpaceOnUse">
-                        <stop stop-color="#6E45E2"/>
-                        <stop offset="1" stop-color="#88D3CE"/>
-                    </linearGradient>
-                </defs>
-            </svg>
+    <!-- Welcome Screen -->
+    <section class="welcome-screen" id="welcomeScreen">
+        <div class="enter-text">Welcome to My Developer Profile</div>
+        <div class="scroll-indicator" onclick="scrollToContent()">
+            <div class="scroll-text">Scroll Down</div>
+            <div class="scroll-arrow"></div>
         </div>
     </section>
 
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
+    <!-- Main Profile Content -->
+    <section class="main-content" id="mainContent">
         <div class="container">
-            <h2 class="section-title">Our Pricing Plans</h2>
-            <div class="pricing-pops">
-                <!-- Pop 1 -->
-                <div class="pop">
-                    <div class="pop-header">
-                        <h3 class="pop-name">Syltic</h3>
+            <div class="profile-content">
+                <div class="info-section">
+                    <div class="info-title">
+                        <img src="tom.png" alt="Profile Picture" class="profile-icon">
+                        tom.m7
                     </div>
-                    <ul class="pop-specs">
-                        <li><span>RAM:</span><span>32GB</span></li>
-                        <li><span>CPU Cores:</span><span>8</span></li>
-                        <li><span>Storage:</span><span>500GB SSD</span></li>
-                        <li><span>Bandwidth:</span><span>10TB</span></li>
-                        <li><span>DDoS Protection:</span><span>Yes</span></li>
-                    </ul>
-                    <div class="pop-price">$5.63</div>
-                    <a href="https://discord.gg/syltic" class="pop-button">For 1 Month</a>
+                    <div class="info-text">
+                        <div class="experience-item">
+                            <strong>Noor Damery</strong><br>
+                            <i class="fas fa-map-marker-alt"></i> Middle East, EG<br>
+                            <span class="status-inline">🏖️ On Vacation</span>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Pop 2 -->
-                <div class="pop">
-                    <div class="pop-header">
-                        <h3 class="pop-name">Syltic Plus</h3>
+                <div class="info-section">
+                    <div class="info-title">
+                        <i class="fas fa-graduation-cap"></i>
+                        Certificate
                     </div>
-                    <ul class="pop-specs">
-                        <li><span>RAM:</span><span>64GB</span></li>
-                        <li><span>CPU Cores:</span><span>16</span></li>
-                        <li><span>Storage:</span><span>1TB SSD</span></li>
-                        <li><span>Bandwidth:</span><span>20TB</span></li>
-                        <li><span>DDoS Protection:</span><span>Yes</span></li>
-                    </ul>
-                    <div class="pop-price">$11.73</div>
-                    <a href="https://discord.gg/syltic" class="pop-button">For 1 Month</a>
+                    <div class="info-text">
+                        He is still studying
+                    </div>
                 </div>
 
-                <!-- Pop 3 -->
-                <div class="pop">
-                    <div class="pop-header">
-                        <h3 class="pop-name">Syltic Pro</h3>
+                <div class="info-section">
+                    <div class="info-title">
+                        <i class="fas fa-code"></i>
+                        Skills & Expertise
                     </div>
-                    <ul class="pop-specs">
-                        <li><span>RAM:</span><span>128GB</span></li>
-                        <li><span>CPU Cores:</span><span>32</span></li>
-                        <li><span>Storage:</span><span>2TB SSD</span></li>
-                        <li><span>Bandwidth:</span><span>50TB</span></li>
-                        <li><span>DDoS Protection:</span><span>Yes</span></li>
-                    </ul>
-                    <div class="pop-price">$21.32</div>
-                    <a href="https://discord.gg/syltic" class="pop-button">For 1 Month</a>
+                    <div class="skills-grid">
+                        <div class="skill-tag">Node.js</div>
+                        <div class="skill-tag">JavaScript</div>
+                        <div class="skill-tag">HTML/CSS</div>
+                    </div>
                 </div>
+
+                <div class="info-section">
+                    <div class="info-title">
+                        <i class="fas fa-briefcase"></i>
+                        Experiences
+                    </div>
+                    <div class="info-text">
+                        <div class="experience-item">
+                            <strong>Intermediate Developer</strong><br>
+                            Node.js, JavaScript & HTML Development
+                        </div>
+                        <div class="experience-item">
+                            <strong>Industries</strong><br>
+                            AI Industry & Hosting
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <div class="info-title">
+                        <i class="fas fa-rocket"></i>
+                        Latest Project
+                    </div>
+                    <div class="info-text">
+                        <div class="experience-item project-highlight">
+                            <strong>Mandolin Host</strong> (May 2025)<br>
+                            <em>Status: Discontinued due to internal team conflicts</em><br>
+                            hosting platform project
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="social-links">
+                <a href="#" class="social-link github">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
+                </a>
+                <a href="#" class="social-link discord">
+                    <i class="fab fa-discord"></i>
+                    <span>Discord</span>
+                </a>
+                <a href="#" class="social-link instagram">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                </a>
+                <a href="#" class="social-link whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </a>
             </div>
         </div>
     </section>
-
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <h2 class="section-title">Contact Us</h2>
-            <p>Have questions or need support? Reach out to us!</p>
-            <div class="contact-email">
-                <a href="mailto:noor@syltic.net">noor@syltic.net</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-logo">
-                <img src="syltic.png" alt="Syltic, Inc.">
-                <span>Syltic, Inc.</span>
-            </div>
-            <div class="footer-links">
-                <a href="#home">Home</a>
-                <a href="#pricing">Pricing</a>
-                <a href="https://discord.gg/syltic">Discord</a>
-            </div>
-            <p class="copyright">© 2023 Syltic, Inc. All rights reserved.</p>
-        </div>
-    </footer>
 
     <script>
-        // Create particles
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 30;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                // Random size between 2px and 6px
-                const size = Math.random() * 4 + 2;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                
-                // Random position
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.bottom = `-${size}px`;
-                
-                // Random animation duration between 10s and 20s
-                const duration = Math.random() * 10 + 10;
-                particle.style.animationDuration = `${duration}s`;
-                
-                // Random delay
-                particle.style.animationDelay = `${Math.random() * 10}s`;
-                
-                particlesContainer.appendChild(particle);
-            }
+        // Smooth scroll to content function
+        function scrollToContent() {
+            document.getElementById('mainContent').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
         }
 
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
+        // Handle scroll wheel and touch events on welcome screen
+        document.addEventListener('DOMContentLoaded', function() {
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            let scrolled = false;
+
+            // Mouse wheel event
+            welcomeScreen.addEventListener('wheel', function(e) {
+                if (e.deltaY > 0 && !scrolled) {
+                    scrolled = true;
+                    scrollToContent();
+                }
+            });
+
+            // Touch events for mobile
+            let touchStartY = 0;
+            
+            welcomeScreen.addEventListener('touchstart', function(e) {
+                touchStartY = e.touches[0].clientY;
+            });
+
+            welcomeScreen.addEventListener('touchmove', function(e) {
+                const touchCurrentY = e.touches[0].clientY;
+                const touchDiff = touchStartY - touchCurrentY;
                 
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
+                if (touchDiff > 50 && !scrolled) {
+                    scrolled = true;
+                    scrollToContent();
+                }
+            });
+
+            // Keyboard support (arrow keys, page down, space)
+            document.addEventListener('keydown', function(e) {
+                if (!scrolled && (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ')) {
+                    e.preventDefault();
+                    scrolled = true;
+                    scrollToContent();
+                }
+            });
+
+            // Reset scrolled flag when back at top
+            window.addEventListener('scroll', function() {
+                if (window.scrollY === 0) {
+                    scrolled = false;
+                }
+            });
+
+            // Enhanced click effects for social links
+            document.querySelectorAll('.social-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Add ripple effect
+                    const ripple = document.createElement('span');
+                    ripple.style.cssText = `
+                        position: absolute;
+                        background: rgba(255, 255, 255, 0.6);
+                        border-radius: 50%;
+                        width: 20px;
+                        height: 20px;
+                        left: 50%;
+                        top: 50%;
+                        transform: translate(-50%, -50%) scale(0);
+                        animation: ripple 0.6s ease-out;
+                        pointer-events: none;
+                    `;
+                    
+                    this.style.position = 'relative';
+                    this.appendChild(ripple);
+                    
+                    // Scale effect
+                    this.style.transform = 'translateY(-5px) scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'translateY(-5px) scale(1.05)';
+                        setTimeout(() => {
+                            ripple.remove();
+                        }, 600);
+                    }, 150);
                 });
             });
-        });
 
-        // Initialize when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            createParticles();
-            
-            // Add scroll animation for pops
-            const pops = document.querySelectorAll('.pop');
-            
-            const observer = new IntersectionObserver((entries) => {
+            // Enhanced hover effects for skill tags
+            document.querySelectorAll('.skill-tag').forEach(tag => {
+                tag.addEventListener('mouseenter', function() {
+                    this.style.background = 'linear-gradient(45deg, #4c1d95, #6b46c1)';
+                    this.style.boxShadow = '0 10px 25px rgba(45, 27, 105, 0.5)';
+                });
+                tag.addEventListener('mouseleave', function() {
+                    this.style.background = 'linear-gradient(45deg, #2d1b69, #4c1d95)';
+                    this.style.boxShadow = 'none';
+                });
+            });
+
+            // Parallax effect for welcome screen (desktop only)
+            if (window.innerWidth > 768) {
+                window.addEventListener('scroll', function() {
+                    const scrolled = window.pageYOffset;
+                    const parallax = scrolled * 0.5;
+                    welcomeScreen.style.transform = `translateY(${parallax}px)`;
+                });
+            }
+
+            // Intersection Observer for scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.style.opacity = 1;
+                        entry.target.style.opacity = '1';
                         entry.target.style.transform = 'translateY(0)';
                     }
                 });
-            }, { threshold: 0.1 });
-            
-            pops.forEach(pop => {
-                pop.style.opacity = 0;
-                pop.style.transform = 'translateY(20px)';
-                pop.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                observer.observe(pop);
+            }, observerOptions);
+
+            // Observe all info sections for scroll animations
+            document.querySelectorAll('.info-section').forEach(section => {
+                observer.observe(section);
             });
+
+            // Add CSS for ripple animation
+            if (!document.querySelector('#ripple-styles')) {
+                const style = document.createElement('style');
+                style.id = 'ripple-styles';
+                style.textContent = `
+                    @keyframes ripple {
+                        to {
+                            transform: translate(-50%, -50%) scale(4);
+                            opacity: 0;
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
         });
     </script>
 </body>
