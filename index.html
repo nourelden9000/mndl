@@ -38,11 +38,14 @@
         }
 
         .enter-text {
-            color: white;
+            background: linear-gradient(135deg, #c0c0c0 0%, #ffffff 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             font-size: 2.5rem;
             font-weight: 600;
             margin-bottom: 30px;
-            animation: fadeInUp 1s ease-out;
+            animation: fadeInUp 1s ease-out, shimmer 3s ease-in-out infinite;
             text-align: center;
             letter-spacing: -0.02em;
         }
@@ -61,26 +64,32 @@
         }
 
         .scroll-text {
-            color: rgba(255, 255, 255, 0.8);
+            background: linear-gradient(135deg, #c0c0c0 0%, #ffffff 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             font-size: 1.1rem;
             margin-bottom: 20px;
             font-weight: 400;
+            animation: shimmer 3s ease-in-out infinite 0.5s;
         }
 
         .scroll-arrow {
             width: 35px;
             height: 35px;
-            border: 2px solid rgba(255, 255, 255, 0.6);
+            border: 2px solid;
+            border-image: linear-gradient(135deg, #c0c0c0 0%, #ffffff 100%) 1;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
             transition: all 0.3s ease;
+            animation: shimmer 3s ease-in-out infinite 1s;
         }
 
         .scroll-indicator:hover .scroll-arrow {
-            border-color: rgba(255, 255, 255, 0.9);
+            border-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) 1;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
 
@@ -88,10 +97,20 @@
             content: '';
             width: 10px;
             height: 10px;
-            border-right: 2px solid rgba(255, 255, 255, 0.8);
-            border-bottom: 2px solid rgba(255, 255, 255, 0.8);
+            border-right: 2px solid;
+            border-bottom: 2px solid;
+            border-image: linear-gradient(135deg, #c0c0c0 0%, #ffffff 100%) 1;
             transform: rotate(45deg);
             margin-top: -2px;
+        }
+
+        @keyframes shimmer {
+            0%, 100% {
+                filter: brightness(0.8);
+            }
+            50% {
+                filter: brightness(1.2);
+            }
         }
 
         @keyframes bounce {
@@ -324,6 +343,65 @@
             50% { transform: scale(1.05); }
         }
 
+        /* Footer Styles */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 50px;
+            background: rgba(10, 10, 20, 0.5);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-text {
+            background: linear-gradient(
+                135deg,
+                #c0c0c0 0%,
+                #ffffff 20%,
+                #ff6b6b 25%,
+                #4ecdc4 30%,
+                #45b7d1 35%,
+                #96ceb4 40%,
+                #feca57 45%,
+                #ff9ff3 50%,
+                #54a0ff 55%,
+                #5f27cd 60%,
+                #00d2d3 65%,
+                #ff9f43 70%,
+                #10ac84 75%,
+                #ffffff 80%,
+                #c0c0c0 85%,
+                #ee5a24 90%,
+                #ffffff 100%
+            );
+            background-size: 400% 400%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.2rem;
+            font-weight: 500;
+            animation: silverRainbowFlow 25s ease-in-out infinite;
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes silverRainbowFlow {
+            0% {
+                background-position: 0% 50%;
+            }
+            25% {
+                background-position: 100% 50%;
+            }
+            50% {
+                background-position: 100% 100%;
+            }
+            75% {
+                background-position: 0% 100%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
         /* Desktop specific enhancements */
         @media (min-width: 1024px) {
             .enter-text {
@@ -374,6 +452,10 @@
                 padding: 18px 30px;
                 font-size: 1.1rem;
             }
+
+            .footer-text {
+                font-size: 1.4rem;
+            }
         }
 
         /* Ultra-wide desktop support */
@@ -390,6 +472,10 @@
             
             .enter-text {
                 font-size: 3.5rem;
+            }
+
+            .footer-text {
+                font-size: 1.5rem;
             }
         }
 
@@ -419,6 +505,10 @@
             
             .enter-text {
                 font-size: 2.2rem;
+            }
+
+            .footer-text {
+                font-size: 1.1rem;
             }
         }
 
@@ -490,6 +580,10 @@
                 padding: 15px;
                 margin-bottom: 15px;
             }
+
+            .footer-text {
+                font-size: 1rem;
+            }
         }
 
         /* Smooth scroll for all browsers */
@@ -519,6 +613,13 @@
             }
             
             .scroll-indicator {
+                animation: none;
+            }
+
+            .enter-text,
+            .scroll-text,
+            .scroll-arrow,
+            .footer-text {
                 animation: none;
             }
         }
@@ -625,6 +726,11 @@
                 </a>
             </div>
         </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-text">Mandolin Software, Inc.</div>
+        </footer>
     </section>
 
     <script>
@@ -772,4 +878,4 @@
         });
     </script>
 </body>
-</html>
+    </html>
