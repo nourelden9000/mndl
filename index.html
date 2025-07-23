@@ -141,6 +141,7 @@
             background: #000000;
             min-height: 100vh;
             padding-top: 80px;
+            position: relative;
         }
 
         .container {
@@ -245,6 +246,7 @@
             flex-wrap: wrap;
             opacity: 0;
             animation: fadeIn 1s ease-out 0.8s forwards;
+            margin-bottom: 50px;
         }
 
         @keyframes fadeIn {
@@ -338,6 +340,29 @@
             box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
         }
 
+        .info-section.half-width {
+            max-width: 50%;
+            margin: 0 auto;
+        }
+
+        .info-section.compact {
+            padding: 20px 35px;
+            text-align: center;
+        }
+
+        .info-section.compact .info-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            justify-content: center;
+        }
+
+        .info-section.compact .experience-item {
+            margin-bottom: 0;
+            padding: 10px 15px;
+            background: transparent;
+            border: none;
+        }
+
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
@@ -347,10 +372,10 @@
         .footer {
             text-align: center;
             padding: 40px 20px;
-            margin-top: 50px;
             background: rgba(10, 10, 20, 0.5);
             backdrop-filter: blur(10px);
             border-top: 1px solid rgba(255, 255, 255, 0.05);
+            width: 100%;
         }
 
         .footer-text {
@@ -666,7 +691,7 @@
                 <div class="info-section">
                     <div class="info-title">
                         <i class="fas fa-code"></i>
-                        Skills & Expertise
+                        Languages
                     </div>
                     <div class="skills-grid">
                         <div class="skill-tag">Node.js</div>
@@ -701,7 +726,6 @@
                         <div class="experience-item project-highlight">
                             <strong>Mandolin Host</strong> (May 2025)<br>
                             <em>Status: Discontinued due to internal team conflicts</em><br>
-                            hosting platform project
                         </div>
                     </div>
                 </div>
@@ -725,10 +749,9 @@
                     <span>WhatsApp</span>
                 </a>
             </div>
-        </div>
 
             <!-- Footer -->
-            <div class="info-section">
+            <div class="info-section compact">
                 <div class="info-title">
                     <i class="fas fa-bolt"></i>
                     Powered By
@@ -739,6 +762,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+        </div>
     </section>
 
     <script>
@@ -753,15 +778,15 @@
         // Handle scroll wheel and touch events on welcome screen
         document.addEventListener('DOMContentLoaded', function() {
             const welcomeScreen = document.getElementById('welcomeScreen');
-            let scrolled = false;
-
-            // Mouse wheel event
+            
+            // Mouse wheel event - only trigger on welcome screen
             welcomeScreen.addEventListener('wheel', function(e) {
-                if (e.deltaY > 0 && !scrolled) {
-                    scrolled = true;
+                // Only scroll down if we're at the welcome screen
+                if (window.scrollY < window.innerHeight / 2 && e.deltaY > 0) {
+                    e.preventDefault();
                     scrollToContent();
                 }
-            });
+            }, { passive: false });
 
             // Touch events for mobile
             let touchStartY = 0;
@@ -774,25 +799,16 @@
                 const touchCurrentY = e.touches[0].clientY;
                 const touchDiff = touchStartY - touchCurrentY;
                 
-                if (touchDiff > 50 && !scrolled) {
-                    scrolled = true;
+                if (touchDiff > 50 && window.scrollY < window.innerHeight / 2) {
                     scrollToContent();
                 }
             });
 
-            // Keyboard support (arrow keys, page down, space)
+            // Keyboard support (arrow keys, page down, space) - only when at top
             document.addEventListener('keydown', function(e) {
-                if (!scrolled && (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ')) {
+                if (window.scrollY < window.innerHeight / 2 && (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ')) {
                     e.preventDefault();
-                    scrolled = true;
                     scrollToContent();
-                }
-            });
-
-            // Reset scrolled flag when back at top
-            window.addEventListener('scroll', function() {
-                if (window.scrollY === 0) {
-                    scrolled = false;
                 }
             });
 
@@ -845,7 +861,9 @@
                 window.addEventListener('scroll', function() {
                     const scrolled = window.pageYOffset;
                     const parallax = scrolled * 0.5;
-                    welcomeScreen.style.transform = `translateY(${parallax}px)`;
+                    if (scrolled < window.innerHeight) {
+                        welcomeScreen.style.transform = `translateY(${parallax}px)`;
+                    }
                 });
             }
 
