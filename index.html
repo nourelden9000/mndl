@@ -700,8 +700,8 @@
                 <div class="skills-grid">  
                     <div class="skill-tag">Node.js</div>  
                     <div class="skill-tag">JavaScript</div>  
-                    <div class="skill-tag">Python</div>
-                    <div class=skill-tag">HTML/CSS</div> 
+                    <div class="skill-tag">Python</div>  
+                    <div class="skill-tag">HTML/CSS</div>  
                 </div>  
             </div>  
 
@@ -809,4 +809,105 @@
             }  
         });  
 
-        // Keyboard support (arrow keys, page down, space) - only
+        // Keyboard support (arrow keys, page down, space) - only when at top  
+        document.addEventListener('keydown', function(e) {  
+            if (window.scrollY < window.innerHeight / 2 && (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ')) {  
+                e.preventDefault();  
+                scrollToContent();  
+            }  
+        });  
+
+        // Enhanced click effects for social links  
+        document.querySelectorAll('.social-link').forEach(link => {  
+            link.addEventListener('click', function(e) {  
+                // Add ripple effect  
+                const ripple = document.createElement('span');  
+                ripple.style.cssText = `  
+                    position: absolute;  
+                    background: rgba(255, 255, 255, 0.6);  
+                    border-radius: 50%;  
+                    width: 20px;  
+                    height: 20px;  
+                    left: 50%;  
+                    top: 50%;  
+                    transform: translate(-50%, -50%) scale(0);  
+                    animation: ripple 0.6s ease-out;  
+                    pointer-events: none;  
+                `;  
+                  
+                this.style.position = 'relative';  
+                this.appendChild(ripple);  
+                  
+                // Scale effect  
+                this.style.transform = 'translateY(-5px) scale(0.95)';  
+                setTimeout(() => {  
+                    this.style.transform = 'translateY(-5px) scale(1.05)';  
+                    setTimeout(() => {  
+                        ripple.remove();  
+                    }, 600);  
+                }, 150);  
+            });  
+        });  
+
+        // Enhanced hover effects for skill tags  
+        document.querySelectorAll('.skill-tag').forEach(tag => {  
+            tag.addEventListener('mouseenter', function() {  
+                this.style.background = 'linear-gradient(45deg, #2d2d54, #4a4a7a)';  
+                this.style.boxShadow = '0 10px 25px rgba(224, 224, 224, 0.25)';  
+            });  
+            tag.addEventListener('mouseleave', function() {  
+                this.style.background = 'linear-gradient(45deg, #1a1a2e, #2d2d54)';  
+                this.style.boxShadow = 'none';  
+            });  
+        });  
+
+        // Parallax effect for welcome screen (desktop only)  
+        if (window.innerWidth > 768) {  
+            window.addEventListener('scroll', function() {  
+                const scrolled = window.pageYOffset;  
+                const parallax = scrolled * 0.5;  
+                if (scrolled < window.innerHeight) {  
+                    welcomeScreen.style.transform = `translateY(${parallax}px)`;  
+                }  
+            });  
+        }  
+
+        // Intersection Observer for scroll animations  
+        const observerOptions = {  
+            threshold: 0.1,  
+            rootMargin: '0px 0px -50px 0px'  
+        };  
+
+        const observer = new IntersectionObserver(function(entries) {  
+            entries.forEach(entry => {  
+                if (entry.isIntersecting) {  
+                    entry.target.style.opacity = '1';  
+                    entry.target.style.transform = 'translateY(0)';  
+                }  
+            });  
+        }, observerOptions);  
+
+        // Observe all info sections for scroll animations  
+        document.querySelectorAll('.info-section').forEach(section => {  
+            observer.observe(section);  
+        });  
+
+        // Add CSS for ripple animation  
+        if (!document.querySelector('#ripple-styles')) {  
+            const style = document.createElement('style');  
+            style.id = 'ripple-styles';  
+            style.textContent = `  
+                @keyframes ripple {  
+                    to {  
+                        transform: translate(-50%, -50%) scale(4);  
+                        opacity: 0;  
+                    }  
+                }  
+            `;  
+            document.head.appendChild(style);  
+        }  
+    });  
+</script>
+
+</body>  
+    </html>
