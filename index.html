@@ -1,907 +1,283 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>tom.m7</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>tom.m7</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #000;
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-        html {
-            scroll-behavior: smooth;
-        }
+    /* Welcome Screen */
+    .welcome-screen {
+      width: 100%;
+      height: 100vh;
+      background: linear-gradient(135deg, #000 0%, #1a1a1a 30%, #3a9bdc 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #000000;
-            color: #ffffff;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+    .enter-text {
+      background: linear-gradient(135deg, #e0e0e0 0%, #87cefa 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 30px;
+      animation: fadeInUp 1s ease-out, shimmer 3s ease-in-out infinite;
+      text-align: center;
+      letter-spacing: -0.02em;
+    }
 
-        /* Welcome Screen Styles */
-        .welcome-screen {
-            width: 100%;
-            height: 100vh;
-            background: linear-gradient(135deg, #000000 0%, #2d1b69 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
+    .scroll-indicator { display: flex; flex-direction: column; align-items: center; animation: bounce 2s infinite; cursor: pointer; transition: all 0.3s ease; }
+    .scroll-indicator:hover { transform: scale(1.1); }
 
-        .enter-text {
-            background: linear-gradient(135deg, #c0c0c0 0%, #ffffff 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 2.5rem;
-            font-weight: 600;
-            margin-bottom: 30px;
-            animation: fadeInUp 1s ease-out, shimmer 3s ease-in-out infinite;
-            text-align: center;
-            letter-spacing: -0.02em;
-        }
+    .scroll-text {
+      background: linear-gradient(135deg, #c0c0c0 0%, #87cefa 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      font-weight: 400;
+      animation: shimmer 3s ease-in-out infinite 0.5s;
+    }
 
-        .scroll-indicator {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            animation: bounce 2s infinite;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+    .scroll-arrow {
+      width: 35px; height: 35px; border: 2px solid;
+      border-image: linear-gradient(135deg, #c0c0c0 0%, #87cefa 100%) 1;
+      border-radius: 50%; display: flex; justify-content: center; align-items: center;
+      animation: shimmer 3s ease-in-out infinite 1s;
+    }
 
-        .scroll-indicator:hover {
-            transform: scale(1.1);
-        }
+    .scroll-indicator:hover .scroll-arrow {
+      border-image: linear-gradient(135deg, #fff 0%, #87cefa 100%) 1;
+      box-shadow: 0 0 20px rgba(135, 206, 250, 0.6);
+    }
 
-        .scroll-text {
-            background: linear-gradient(135deg, #c0c0c0 0%, #ffffff 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-            font-weight: 400;
-            animation: shimmer 3s ease-in-out infinite 0.5s;
-        }
+    .scroll-arrow::after {
+      content: ''; width: 10px; height: 10px;
+      border-right: 2px solid; border-bottom: 2px solid;
+      border-image: linear-gradient(135deg, #c0c0c0 0%, #87cefa 100%) 1;
+      transform: rotate(45deg); margin-top: -2px;
+    }
 
-        .scroll-arrow {
-            width: 35px;
-            height: 35px;
-            border: 2px solid;
-            border-image: linear-gradient(135deg, #c0c0c0 0%, #ffffff 100%) 1;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            transition: all 0.3s ease;
-            animation: shimmer 3s ease-in-out infinite 1s;
-        }
+    @keyframes shimmer { 0%,100%{filter:brightness(.8);} 50%{filter:brightness(1.3);} }
+    @keyframes bounce {
+      0%,20%,50%,80%,100%{transform:translateY(0);} 
+      40%{transform:translateY(-10px);} 
+      60%{transform:translateY(-5px);}
+    }
+    @keyframes fadeInUp { from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:translateY(0);} }
 
-        .scroll-indicator:hover .scroll-arrow {
-            border-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) 1;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-        }
+    /* Main */
+    .main-content { background:#000; min-height:100vh; padding-top:80px; }
+    .container { max-width:1400px; margin:0 auto; padding:0 50px 60px; min-height:100vh; }
+    .profile-content { animation:slideUp 1s ease-out; display:grid; gap:35px; margin-bottom:50px; }
+    @keyframes slideUp { from{opacity:0;transform:translateY(50px);} to{opacity:1;transform:translateY(0);} }
 
-        .scroll-arrow::after {
-            content: '';
-            width: 10px;
-            height: 10px;
-            border-right: 2px solid;
-            border-bottom: 2px solid;
-            border-image: linear-gradient(135deg, #c0c0c0 0%, #ffffff 100%) 1;
-            transform: rotate(45deg);
-            margin-top: -2px;
-        }
+    .info-section {
+      background: rgba(20,20,35,0.8);
+      padding: 35px;
+      border-radius: 25px;
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.4s;
+      backdrop-filter: blur(10px);
+    }
+    .info-section:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 35px rgba(173,216,230,0.6), 0 0 60px rgba(0,191,255,0.4);
+      border-color: rgba(173,216,230,0.7);
+      background: rgba(25,25,40,0.9);
+    }
 
-        @keyframes shimmer {
-            0%, 100% {
-                filter: brightness(0.8);
-            }
-            50% {
-                filter: brightness(1.2);
-            }
-        }
+    .info-title {
+      font-size: 1.4rem; font-weight: 600;
+      color: #87cefa;
+      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .info-text { font-size: 1.05rem; line-height: 1.7; color: #e0e0e0; }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-10px);
-            }
-            60% {
-                transform: translateY(-5px);
-            }
-        }
+    .experience-item {
+      margin-bottom: 18px; padding: 20px;
+      background: rgba(30,30,45,0.6);
+      border-radius: 15px;
+      border-left: 4px solid #00bfff;
+      transition: all 0.3s;
+    }
+    .experience-item:hover {
+      background: rgba(40,40,55,0.9);
+      box-shadow: 0 0 25px rgba(135,206,250,0.5);
+    }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .project-highlight {
+      background: linear-gradient(45deg, rgba(135,206,250,0.2), rgba(0,191,255,0.2));
+      border-left-color: #87cefa;
+    }
 
-        /* Main Profile Styles */
-        .main-content {
-            background: #000000;
-            min-height: 100vh;
-            padding-top: 80px;
-            position: relative;
-        }
+    .social-links { display:flex; justify-content:center; gap:25px; flex-wrap:wrap; margin-bottom:50px; }
+    .social-link {
+      display:flex; align-items:center; gap:12px;
+      padding:15px 25px;
+      background: rgba(135,206,250,0.1);
+      border:2px solid rgba(135,206,250,0.4);
+      border-radius:30px;
+      color:#fff; text-decoration:none;
+      font-weight:500; font-size:1.05rem;
+      transition: all 0.4s;
+      backdrop-filter: blur(10px);
+    }
+    .social-link:hover {
+      background: rgba(135,206,250,0.3);
+      border-color: #00bfff;
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 15px 35px rgba(135,206,250,0.4);
+    }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 50px 60px 50px;
-            min-height: 100vh;
-        }
+    .skill-tag {
+      background: linear-gradient(45deg, #c0c0c0, #87cefa);
+      color:#000; padding:12px 16px; border-radius:25px;
+      text-align:center; font-weight:600;
+      transition: all 0.4s; cursor:pointer;
+    }
+    .skill-tag:hover {
+      background: linear-gradient(45deg, #87cefa, #00bfff);
+      box-shadow: 0 10px 25px rgba(0,191,255,0.6);
+    }
 
-        .profile-content {
-            animation: slideUp 1s ease-out;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 35px;
-            margin-bottom: 50px;
-        }
+    .status-inline {
+      display:inline-block;
+      background: linear-gradient(45deg, #f0f0f0, #87cefa);
+      color:#000;
+      padding:6px 16px;
+      border-radius:20px;
+      font-weight:600; font-size:0.85rem;
+      animation:pulse 2s infinite;
+      box-shadow:0 0 15px rgba(0,191,255,0.8);
+    }
+    @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.05);} }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .info-section {
-            background: rgba(20, 20, 35, 0.8);
-            padding: 35px;
-            border-radius: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInSection 0.8s ease-out forwards;
-            backdrop-filter: blur(10px);
-        }
-
-        .info-section:nth-child(1) { animation-delay: 0.1s; }
-        .info-section:nth-child(2) { animation-delay: 0.2s; }
-        .info-section:nth-child(3) { animation-delay: 0.3s; }
-        .info-section:nth-child(4) { animation-delay: 0.4s; }
-        .info-section:nth-child(5) { animation-delay: 0.5s; }
-        .info-section:nth-child(6) { animation-delay: 0.6s; }
-
-        @keyframes fadeInSection {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .info-section:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 50px rgba(107, 70, 193, 0.25);
-            border-color: rgba(107, 70, 193, 0.4);
-            background: rgba(25, 25, 40, 0.9);
-        }
-
-        .info-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: #6b46c1;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            letter-spacing: -0.01em;
-        }
-
-        .info-text {
-            font-size: 1.05rem;
-            line-height: 1.7;
-            color: #e0e0e0;
-        }
-
-        .experience-item {
-            margin-bottom: 18px;
-            padding: 20px;
-            background: rgba(25, 25, 40, 0.6);
-            border-radius: 15px;
-            border-left: 4px solid #6b46c1;
-            transition: all 0.3s ease;
-        }
-
-        .experience-item:hover {
-            background: rgba(30, 30, 45, 0.8);
-            transform: translateX(5px);
-        }
-
-        .project-highlight {
-            background: linear-gradient(45deg, rgba(255, 107, 107, 0.2), rgba(255, 217, 61, 0.2));
-            border-left-color: #ff6b6b;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            flex-wrap: wrap;
-            opacity: 0;
-            animation: fadeIn 1s ease-out 0.8s forwards;
-            margin-bottom: 50px;
-        }
-
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
-        }
-
-        .social-link {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 15px 25px;
-            background: rgba(107, 70, 193, 0.1);
-            border: 2px solid rgba(107, 70, 193, 0.3);
-            border-radius: 30px;
-            color: #ffffff;
-            text-decoration: none;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            font-weight: 500;
-            font-size: 1.05rem;
-            backdrop-filter: blur(10px);
-        }
-
-        .social-link:hover {
-            background: rgba(107, 70, 193, 0.3);
-            border-color: #6b46c1;
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 35px rgba(107, 70, 193, 0.4);
-        }
-
-        .social-link i {
-            font-size: 1.3rem;
-            transition: transform 0.3s ease;
-        }
-
-        .social-link:hover i {
-            transform: scale(1.2);
-        }
-
-        .github:hover { border-color: #333; background: rgba(51, 51, 51, 0.3); box-shadow: 0 15px 35px rgba(51, 51, 51, 0.4); }
-        .discord:hover { border-color: #5865f2; background: rgba(88, 101, 242, 0.3); box-shadow: 0 15px 35px rgba(88, 101, 242, 0.4); }
-        .instagram:hover { border-color: #e4405f; background: rgba(228, 64, 95, 0.3); box-shadow: 0 15px 35px rgba(228, 64, 95, 0.4); }
-        .whatsapp:hover { border-color: #25d366; background: rgba(37, 211, 102, 0.3); box-shadow: 0 15px 35px rgba(37, 211, 102, 0.4); }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .skill-tag {
-            background: linear-gradient(45deg, #2d1b69, #4c1d95);
-            color: white;
-            padding: 12px 16px;
-            border-radius: 25px;
-            text-align: center;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .skill-tag:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 10px 25px rgba(45, 27, 105, 0.5);
-            background: linear-gradient(45deg, #4c1d95, #6b46c1);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .profile-icon {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            margin-right: 10px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .status-inline {
-            display: inline-block;
-            background: linear-gradient(45deg, #a855f7, #c084fc);
-            color: #ffffff;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-weight: 500;
-            font-size: 0.8rem;
-            margin-top: 8px;
-            animation: pulse 2s infinite;
-            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
-        }
-
-        .info-section.half-width {
-            max-width: 50%;
-            margin: 0 auto;
-        }
-
-        .info-section.compact {
-            padding: 20px 35px;
-            text-align: center;
-        }
-
-        .info-section.compact .info-title {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            justify-content: center;
-        }
-
-        .info-section.compact .experience-item {
-            margin-bottom: 0;
-            padding: 10px 15px;
-            background: transparent;
-            border: none;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        /* Footer Styles */
-        .footer {
-            text-align: center;
-            padding: 40px 20px;
-            background: rgba(10, 10, 20, 0.5);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            width: 100%;
-        }
-
-        .footer-text {
-            background: linear-gradient(
-                135deg,
-                #c0c0c0 0%,
-                #ffffff 20%,
-                #c0c0c0 25%,
-                #c0c0c0 30%,
-                #c0c0c0 35%,
-                #ffffff 40%,
-                #c0c0c0 45%,
-                #c0c0c0 50%,
-                #ffffff 55%,
-                #c0c0c0 60%,
-                #c0c0c0 65%,
-                #ffffff 70%,
-                #c0c0c0 75%,
-                #c0c0c0 80%,
-                #400080 85%,
-                #400080 90%,
-                #400080 100%
-            );
-            background-size: 400% 400%;
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 1.2rem;
-            font-weight: 500;
-            animation: silverRainbowFlow 16s ease-in-out infinite;
-            letter-spacing: 0.5px;
-        }
-
-        @keyframes silverRainbowFlow {
-            0% {
-                background-position: 0% 50%;
-            }
-            25% {
-                background-position: 100% 50%;
-            }
-            50% {
-                background-position: 100% 100%;
-            }
-            75% {
-                background-position: 0% 100%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        /* Desktop specific enhancements */
-        @media (min-width: 1024px) {
-            .enter-text {
-                font-size: 3rem;
-                margin-bottom: 40px;
-            }
-            
-            .scroll-text {
-                font-size: 1.2rem;
-                margin-bottom: 25px;
-            }
-            
-            .scroll-arrow {
-                width: 40px;
-                height: 40px;
-            }
-            
-            .container {
-                padding: 0 60px 80px 60px;
-            }
-            
-            .profile-content {
-                gap: 40px;
-                grid-template-columns: 1fr;
-                max-width: 100%;
-            }
-            
-            .info-section {
-                padding: 40px;
-                width: 100%;
-                max-width: 100%;
-            }
-            
-            .info-title {
-                font-size: 1.5rem;
-                margin-bottom: 25px;
-            }
-            
-            .info-text {
-                font-size: 1.1rem;
-            }
-            
-            .social-links {
-                gap: 30px;
-            }
-            
-            .social-link {
-                padding: 18px 30px;
-                font-size: 1.1rem;
-            }
-
-            .footer-text {
-                font-size: 1.4rem;
-            }
-        }
-
-        /* Ultra-wide desktop support */
-        @media (min-width: 1600px) {
-            .container {
-                max-width: 1600px;
-                padding: 0 80px 100px 80px;
-            }
-            
-            .profile-content {
-                grid-template-columns: 1fr;
-                gap: 45px;
-            }
-            
-            .enter-text {
-                font-size: 3.5rem;
-            }
-
-            .footer-text {
-                font-size: 1.5rem;
-            }
-        }
-
-        /* Large desktop optimizations */
-        @media (min-width: 1200px) {
-            .skills-grid {
-                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-                gap: 15px;
-            }
-            
-            .skill-tag {
-                padding: 14px 20px;
-                font-size: 0.95rem;
-            }
-        }
-
-        /* Tablet adjustments */
-        @media (max-width: 1023px) and (min-width: 769px) {
-            .container {
-                padding: 0 40px 50px 40px;
-            }
-            
-            .profile-content {
-                grid-template-columns: 1fr 1fr;
-                gap: 30px;
-            }
-            
-            .enter-text {
-                font-size: 2.2rem;
-            }
-
-            .footer-text {
-                font-size: 1.1rem;
-            }
-        }
-
-        /* Mobile responsive */
-        @media (max-width: 768px) {
-            .profile-content {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            
-            .enter-text {
-                font-size: 1.6rem;
-                text-align: center;
-                padding: 0 20px;
-                margin-bottom: 25px;
-            }
-            
-            .scroll-text {
-                font-size: 0.95rem;
-                margin-bottom: 15px;
-            }
-            
-            .scroll-arrow {
-                width: 30px;
-                height: 30px;
-            }
-            
-            .container {
-                padding: 0 20px 40px 20px;
-            }
-            
-            .main-content {
-                padding-top: 60px;
-            }
-            
-            .social-links {
-                gap: 15px;
-            }
-            
-            .social-link {
-                padding: 12px 18px;
-                font-size: 0.95rem;
-            }
-            
-            .info-section {
-                padding: 25px;
-            }
-            
-            .info-title {
-                font-size: 1.2rem;
-                margin-bottom: 15px;
-            }
-            
-            .info-text {
-                font-size: 1rem;
-            }
-            
-            .skills-grid {
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-                gap: 10px;
-            }
-            
-            .skill-tag {
-                padding: 10px 12px;
-                font-size: 0.85rem;
-            }
-            
-            .experience-item {
-                padding: 15px;
-                margin-bottom: 15px;
-            }
-
-            .footer-text {
-                font-size: 1rem;
-            }
-        }
-
-        /* Smooth scroll for all browsers */
-        @media (prefers-reduced-motion: no-preference) {
-            html {
-                scroll-behavior: smooth;
-            }
-        }
-
-        /* High contrast mode support */
-        @media (prefers-contrast: high) {
-            .info-section {
-                border: 2px solid rgba(255, 255, 255, 0.3);
-            }
-            
-            .skill-tag {
-                border: 1px solid rgba(255, 255, 255, 0.5);
-            }
-        }
-
-        /* Reduced motion support */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-            
-            .scroll-indicator {
-                animation: none;
-            }
-
-            .enter-text,
-            .scroll-text,
-            .scroll-arrow,
-            .footer-text {
-                animation: none;
-            }
-        }
-    </style>
+    /* Footer */
+    .footer { text-align:center; padding:40px 20px; background:rgba(10,10,20,0.6); border-top:1px solid rgba(255,255,255,0.05);}
+    .footer-text {
+      background: linear-gradient(135deg, #dcdcdc 0%, #fff 25%, #87cefa 50%, #00bfff 75%, #fff 100%);
+      background-size: 400% 400%;
+      background-clip: text;
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      font-size:1.2rem; font-weight:600;
+      animation:silverRainbowFlow 12s ease-in-out infinite;
+    }
+    @keyframes silverRainbowFlow {
+      0%{background-position:0% 50%;}
+      50%{background-position:100% 50%;}
+      100%{background-position:0% 50%;}
+    }
+  </style>
 </head>
 <body>
-    <!-- Welcome Screen -->
-    <section class="welcome-screen" id="welcomeScreen">
-        <div class="enter-text">Welcome to My Portfolio Page</div>
-        <div class="scroll-indicator" onclick="scrollToContent()">
-            <div class="scroll-text">Scroll Down</div>
-            <div class="scroll-arrow"></div>
-        </div>
-    </section>
+  <!-- Welcome Screen -->
+  <section class="welcome-screen" id="welcomeScreen">
+    <div class="enter-text">Welcome to My Portfolio Page</div>
+    <div class="scroll-indicator" onclick="scrollToContent()">
+      <div class="scroll-text">Scroll Down</div>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
 
-    <!-- Main Profile Content -->
-    <section class="main-content" id="mainContent">
-        <div class="container">
-            <div class="profile-content">
-                <div class="info-section">
-                    <div class="info-title">
-                        <img src="tom.png" alt="Profile Picture" class="profile-icon">
-                        tom.m7
-                    </div>
-                    <div class="info-text">
-                        <div class="experience-item">
-                            <strong>Noor Damery</strong><br>
-                            <i class="fas fa-map-marker-alt"></i> Middle East, EG<br>
-                            <span class="status-inline">🟢 Available</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="info-section">
-                    <div class="info-title">
-                        <i class="fas fa-graduation-cap"></i>
-                        Certificate
-                    </div>
-                    <div class="info-text">
-                        Still Studying
-                    </div>
-                </div>
-
-                <div class="info-section">
-                    <div class="info-title">
-                        <i class="fas fa-code"></i>
-                        Languages
-                    </div>
-                    <div class="skills-grid">
-                        <div class="skill-tag">Node.js</div>
-                        <div class="skill-tag">JavaScript</div>
-                        <div class="skill-tag">HTML/CSS</div>
-                    </div>
-                </div>
-
-                <div class="info-section">
-                    <div class="info-title">
-                        <i class="fas fa-briefcase"></i>
-                        Experiences
-                    </div>
-                    <div class="info-text">
-                        <div class="experience-item">
-                            <strong>Intermediate Developer</strong><br>
-                            Node.js, JavaScript & HTML Development
-                        </div>
-                        <div class="experience-item">
-                            <strong>Industries</strong><br>
-                            AI Industry & Hosting
-                        </div>
-                    </div>
-                </div>
-
-                <div class="info-section">
-                    <div class="info-title">
-                        <i class="fas fa-rocket"></i>
-                        Latest Project
-                    </div>
-                    <div class="info-text">
-                        <div class="experience-item project-highlight">
-                            <strong>Mandolin Host</strong> (May 2025)<br>
-                            <em>Status: Discontinued due to internal team conflicts</em><br>
-                        </div>
-                    </div>
-                </div>
+  <!-- Main Content -->
+  <section class="main-content" id="mainContent">
+    <div class="container">
+      <div class="profile-content">
+        <div class="info-section">
+          <div class="info-title">
+            <img src="tom.png" alt="Profile" class="profile-icon" style="width:28px;height:28px;border-radius:50%;"/>
+            tom.m7
+          </div>
+          <div class="info-text">
+            <div class="experience-item">
+              <strong>Noor Damery</strong><br>
+              <i class="fas fa-map-marker-alt"></i> Middle East, EG<br>
+              <span class="status-inline">🟢 Available</span>
             </div>
-
-            <div class="social-links">
-                <a href="https://github.com/tom-m7" class="social-link github" target="_blank">
-                    <i class="fab fa-github"></i>
-                    <span>GitHub</span>
-                </a>
-                <a href="https://discord.com/users/1230563250752458753" class="social-link discord" target="_blank">
-                    <i class="fab fa-discord"></i>
-                    <span>Discord</span>
-                </a>
-                <a href="https://www.instagram.com/tom.m7_?igsh=MW8zNW0xajZqeWc2ag==" class="social-link instagram" target="_blank">
-                    <i class="fab fa-instagram"></i>
-                    <span>Instagram</span>
-                </a>
-                <a href="https://wa.me/201060734994" class="social-link whatsapp" target="_blank">
-                    <i class="fab fa-whatsapp"></i>
-                    <span>WhatsApp</span>
-                </a>
-            </div>
-
-            <!-- Footer -->
-            <div class="info-section compact">
-                <div class="info-title">
-                    <i class="fas fa-bolt"></i>
-                    Powered By
-                </div>
-                <div class="info-text">
-                    <div class="experience-item">
-                        <div class="footer-text">Artical Softwares</div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+
+        <div class="info-section">
+          <div class="info-title"><i class="fas fa-graduation-cap"></i> Certificate</div>
+          <div class="info-text">Still Studying</div>
         </div>
-    </section>
 
-    <script>
-        // Smooth scroll to content function
-        function scrollToContent() {
-            document.getElementById('mainContent').scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
+        <div class="info-section">
+          <div class="info-title"><i class="fas fa-code"></i> Languages</div>
+          <div class="skills-grid">
+            <div class="skill-tag">Node.js</div>
+            <div class="skill-tag">JavaScript</div>
+            <div class="skill-tag">HTML/CSS</div>
+          </div>
+        </div>
 
-        // Handle scroll wheel and touch events on welcome screen
-        document.addEventListener('DOMContentLoaded', function() {
-            const welcomeScreen = document.getElementById('welcomeScreen');
-            
-            // Mouse wheel event - only trigger on welcome screen
-            welcomeScreen.addEventListener('wheel', function(e) {
-                // Only scroll down if we're at the welcome screen
-                if (window.scrollY < window.innerHeight / 2 && e.deltaY > 0) {
-                    e.preventDefault();
-                    scrollToContent();
-                }
-            }, { passive: false });
+        <div class="info-section">
+          <div class="info-title"><i class="fas fa-briefcase"></i> Experiences</div>
+          <div class="info-text">
+            <div class="experience-item">
+              <strong>Intermediate Developer</strong><br>
+              Node.js, JavaScript & HTML Development
+            </div>
+            <div class="experience-item">
+              <strong>Industries</strong><br>
+              AI Industry & Hosting
+            </div>
+          </div>
+        </div>
 
-            // Touch events for mobile
-            let touchStartY = 0;
-            
-            welcomeScreen.addEventListener('touchstart', function(e) {
-                touchStartY = e.touches[0].clientY;
-            });
+        <div class="info-section">
+          <div class="info-title"><i class="fas fa-rocket"></i> Latest Project</div>
+          <div class="info-text">
+            <div class="experience-item project-highlight">
+              <strong>Mandolin Host</strong> (May 2025)<br>
+              <em>Status: Discontinued due to internal team conflicts</em>
+            </div>
+          </div>
+        </div>
+      </div>
 
-            welcomeScreen.addEventListener('touchmove', function(e) {
-                const touchCurrentY = e.touches[0].clientY;
-                const touchDiff = touchStartY - touchCurrentY;
-                
-                if (touchDiff > 50 && window.scrollY < window.innerHeight / 2) {
-                    scrollToContent();
-                }
-            });
+      <!-- Social Links -->
+      <div class="social-links">
+        <a href="https://github.com/tom-m7" class="social-link github" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+        <a href="https://discord.com/users/1230563250752458753" class="social-link discord" target="_blank"><i class="fab fa-discord"></i> Discord</a>
+        <a href="https://www.instagram.com/tom.m7_?igsh=MW8zNW0xajZqeWc2ag==" class="social-link instagram" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+        <a href="https://wa.me/201060734994" class="social-link whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      </div>
 
-            // Keyboard support (arrow keys, page down, space) - only when at top
-            document.addEventListener('keydown', function(e) {
-                if (window.scrollY < window.innerHeight / 2 && (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ')) {
-                    e.preventDefault();
-                    scrollToContent();
-                }
-            });
+      <!-- Footer -->
+      <div class="info-section compact">
+        <div class="info-title"><i class="fas fa-bolt"></i> Powered By</div>
+        <div class="info-text">
+          <div class="experience-item"><div class="footer-text">Artical Softwares</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-            // Enhanced click effects for social links
-            document.querySelectorAll('.social-link').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    // Add ripple effect
-                    const ripple = document.createElement('span');
-                    ripple.style.cssText = `
-                        position: absolute;
-                        background: rgba(255, 255, 255, 0.6);
-                        border-radius: 50%;
-                        width: 20px;
-                        height: 20px;
-                        left: 50%;
-                        top: 50%;
-                        transform: translate(-50%, -50%) scale(0);
-                        animation: ripple 0.6s ease-out;
-                        pointer-events: none;
-                    `;
-                    
-                    this.style.position = 'relative';
-                    this.appendChild(ripple);
-                    
-                    // Scale effect
-                    this.style.transform = 'translateY(-5px) scale(0.95)';
-                    setTimeout(() => {
-                        this.style.transform = 'translateY(-5px) scale(1.05)';
-                        setTimeout(() => {
-                            ripple.remove();
-                        }, 600);
-                    }, 150);
-                });
-            });
-
-            // Enhanced hover effects for skill tags
-            document.querySelectorAll('.skill-tag').forEach(tag => {
-                tag.addEventListener('mouseenter', function() {
-                    this.style.background = 'linear-gradient(45deg, #4c1d95, #6b46c1)';
-                    this.style.boxShadow = '0 10px 25px rgba(45, 27, 105, 0.5)';
-                });
-                tag.addEventListener('mouseleave', function() {
-                    this.style.background = 'linear-gradient(45deg, #2d1b69, #4c1d95)';
-                    this.style.boxShadow = 'none';
-                });
-            });
-
-            // Parallax effect for welcome screen (desktop only)
-            if (window.innerWidth > 768) {
-                window.addEventListener('scroll', function() {
-                    const scrolled = window.pageYOffset;
-                    const parallax = scrolled * 0.5;
-                    if (scrolled < window.innerHeight) {
-                        welcomeScreen.style.transform = `translateY(${parallax}px)`;
-                    }
-                });
-            }
-
-            // Intersection Observer for scroll animations
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver(function(entries) {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, observerOptions);
-
-            // Observe all info sections for scroll animations
-            document.querySelectorAll('.info-section').forEach(section => {
-                observer.observe(section);
-            });
-
-            // Add CSS for ripple animation
-            if (!document.querySelector('#ripple-styles')) {
-                const style = document.createElement('style');
-                style.id = 'ripple-styles';
-                style.textContent = `
-                    @keyframes ripple {
-                        to {
-                            transform: translate(-50%, -50%) scale(4);
-                            opacity: 0;
-                        }
-                    }
-                `;
-                document.head.appendChild(style);
-            }
-        });
-    </script>
+  <script>
+    function scrollToContent(){
+      document.getElementById('mainContent').scrollIntoView({behavior:'smooth',block:'start'});
+    }
+  </script>
 </body>
 </html>
